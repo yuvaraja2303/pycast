@@ -25,6 +25,12 @@
 from pycast.methods.basemethod import BaseForecastingMethod
 from pycast.common.timeseries import TimeSeries
 
+#To avoid xrange error
+try: 
+    xrange 
+except NameError: 
+    xrange = range
+
 class ExponentialSmoothing(BaseForecastingMethod):
 
 

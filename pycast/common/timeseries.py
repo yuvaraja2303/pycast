@@ -28,6 +28,12 @@ import time
 import random
 import os
 
+#To avoid xrange error
+try: 
+    xrange 
+except NameError: 
+    xrange = range
+
 # some string constants
 _STR_EPOCHS = "UNIX-epochs"
 
@@ -53,12 +59,12 @@ FusionMethods = {
 }
 
 # Interpolation methods that can be used for interpolation missing data points.
-from helper import linear_interpolation
+from pycast.common.helper import linear_interpolation
 InterpolationMethods = {
     "linear": linear_interpolation
 }
 
-from pycastobject import PyCastObject
+from pycast.common.pycastobject import PyCastObject
 class TimeSeries(PyCastObject):
 
     """A TimeSeries instance stores all relevant data for a real world time series.
@@ -605,7 +611,7 @@ class TimeSeries(PyCastObject):
 
         cls         = self.__class__
         value_count = int(len(self) * percentage)
-        values      = random.sample(self, value_count)
+        values      = random.sample(self.to_twodim_list(), value_count)
 
         sample      = cls.from_twodim_list(values)
         rest_values = self._timeseriesData[:]
